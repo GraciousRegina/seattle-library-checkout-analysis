@@ -1,0 +1,60 @@
+library(readr)
+checkouts <- read_csv("Checkouts_by_Title_20251213.csv")
+checkouts <- checkouts[checkouts$CheckoutYear <= 2017, ]
+
+
+
+main <- function() {
+  monthly_checkouts <- aggregate(Checkouts ~ CheckoutYear + CheckoutMonth, data = checkouts, sum)
+  monthly_checkouts <- monthly_checkouts[monthly_checkouts$CheckoutYear >= 2006, ]
+  x <- monthly_checkouts$Checkouts
+  
+  # Part 4
+  cat("mu_x = ", mean(x), "\n")
+  cat("sigma_x = ", sd(x), "\n\n")
+
+  groups_4 <- split(x[1:144], rep(1:36, each = 4))
+  means_4 <- sapply(groups_4, mean)
+  hist(means_4, main = "Sequential Sample Means (n = 4)", xlab = "Sample Mean")
+  cat("mu_x = ", mean(x), ", mu_xbar = ", mean(means_4), "\n")
+  cat("sigma_x / sqrt(4) = ", sd(x) / sqrt(4), ", sigma_xbar = ", sd(means_4), "\n\n")
+  
+  groups_12 <- split(x[1:144], rep(1:12, each = 12))
+  means_12 <- sapply(groups_12, mean)
+  hist(means_12, main = "Sequential Sample Means (n = 12)", xlab = "Sample Mean")
+  cat("mu_x = ", mean(x), ", mu_xbar = ", mean(means_12), "\n")
+  cat("sigma_x / sqrt(12) = ", sd(x) / sqrt(12), ", sigma_xbar = ", sd(means_12), "\n\n")
+  
+  set.seed(100)
+  
+  means_rand4 <- replicate(50, mean(sample(x, 4, replace = TRUE)))
+  hist(means_rand4, main = "Random Sample Means (n = 4)", xlab = "Sample Mean")
+  cat("mu_x = ", mean(x), ", mu_xbar = ", mean(means_rand4), "\n")
+  cat("sigma_x / sqrt(4) = ", sd(x) / sqrt(4), ", sigma_xbar = ", sd(means_rand4), "\n\n")
+  
+  means_rand12 <- replicate(50, mean(sample(x, 12, replace = TRUE)))
+  hist(means_rand12, main = "Random Sample Means (n = 12)", xlab = "Sample Mean")
+  cat("mu_x = ", mean(x), ", mu_xbar = ", mean(means_rand12), "\n")
+  cat("sigma_x / sqrt(12) = ", sd(x) / sqrt(12), ", sigma_xbar = ", sd(means_rand12), "\n\n")
+  
+  # Part 5
+  samp4 <- sample(x, 4, replace = TRUE)
+  samp12 <- sample(x, 12, replace = TRUE)
+  
+  print(t.test(samp4, conf.level = 0.95))
+  print(t.test(samp12, conf.level = 0.95))
+  
+  # Part 6
+  print(t.test(samp4, mu = mean(x), conf.level = 0.95))
+  print(t.test(samp12, mu = mean(x), conf.level = 0.95))
+  
+  chi2_stat <- (11) * var(samp12) / sd(x)^2
+  lower <- qchisq(0.025, df = 11)
+  upper <- qchisq(0.975, df = 11)
+  cat("Part 6.3: Testing Statistic = ", chi2_stat, ", Interval = (", c(lower, upper), ")\n")
+  
+  upper2 <- qchisq(0.05, df = 11)
+  cat("Part 6.4: Is Testing Statistic = ", chi2_stat, "less than 95 Confidence, 11 DF chisq = ", upper2, "?:", chi2_stat < upper2, "\n")
+}
+
+main()

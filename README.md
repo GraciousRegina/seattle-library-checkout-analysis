@@ -61,9 +61,9 @@ Dependencies
 
 Key Python libraries used in this project:
 
-pandas
-numpy
-matplotlib
-seaborn
-statsmodels
-scipy
+-pandas
+-numpy
+-matplotlib
+-seaborn
+-statsmodels
+-scipy

@@ -56,3 +56,14 @@ Instructor: Hong Do
 
 Full Report
 Download the complete 16-page analysis: report.pdf
+
+Dependencies
+
+Key Python libraries used in this project:
+
+pandas
+numpy
+matplotlib
+seaborn
+statsmodels
+scipy

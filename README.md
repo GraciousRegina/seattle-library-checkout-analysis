@@ -36,16 +36,16 @@ pip install -r requirements.txt
 jupyter notebook notebooks/analysis.ipynb
 
 Key Visualizations 
-https://figures/checkouts_by_year.png
-*Annual checkout trends (2005-2017)*
+## 📊 Key Visualizations
+This project produced a large number of visualizations during exploratory analysis and modeling.
 
-https://figures/material_types.png
-Most popular material types in Seattle Public Library
+To keep the repository lightweight, figures are not embedded here.
+All key visualizations are included and discussed in *report.pdf*.
 
 Team
 Gracious Zigara
 
-Friday Ajinkya
+Hriday Ajinkya
 
 Lilian Wierzbicki
 
